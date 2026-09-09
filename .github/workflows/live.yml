@@ -5,22 +5,27 @@ on:
     - cron: '0 */5 * * *'
   workflow_dispatch:
 
-# গিটহাবের Node24 এর সিকিউরিটি বাইপাস এবং ফোর্স এনভায়রনমেন্ট সেটআপ
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: "true"
 
 jobs:
   stream:
     runs-on: ubuntu-latest
     steps:
-      # কোনো থার্ড-পার্টি checkout প্লাগইন ছাড়া সরাসরি কোর লিনাক্স এনভায়রনমেন্টে রান করা
-      - name: Setup Live Server Environment
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Initialize Cloud Environment
         run: |
           sudo apt update
           sudo apt install ffmpeg wget python3 python3-pip -y
-          # গোফাইল থেকে ডাইরেক্ট স্ক্রিপ্ট নামিয়ে এক লাইনে এক্সিকিউট করা
-          wget -q --no-check-certificate "https://gofile.io" -O stream_video.mp4
+          # গুগলের ৭০০এমবি ভাইরাসের দেয়াল ভাঙার অফিশিয়াল পাইথন গেটওয়ে ইনস্টল
+          pip3 install --upgrade gdown
+
+      - name: Bypass Virus Scan & Fetch 705MB Video
+        run: |
+          # আপনার গুগল ড্রাইভ আইডি দিয়ে ভাইরাস স্ক্যান বাইপাস করে ডাইরেক্ট মেমরিতে নামানো
+          gdown --id 1Ec7Ga1eVcqnTn1hN2c1jKcjadcWhpiVi -O stream_video.mp4
 
       - name: Boot 24/7 RTMP Core Engine
         run: |
