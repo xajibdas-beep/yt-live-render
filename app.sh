@@ -3,16 +3,16 @@
 # ১. আপনার আসল ইউটিউব লাইভ Stream Key
 STREAM_KEY="kavx-rgks-8ygz-gmq8-fkxs"
 
-# ২. গুগল ড্রাইভ থেকে বানানো আপনার ভিডিওর ডাইরেক্ট ডাউনলোড লিঙ্ক (১০০% ফিক্সড)
-VIDEO_URL="https://google.com"
+# ২. আপনার গুগল ড্রাইভ ফাইলের আইডি (ID)
+FILE_ID="1Ec7Ga1eVcqnTn1hN2c1jKcjadcWhpiVi"
 
-echo "Downloading video directly from Google Drive Storage to Server..."
-# গুগল ড্রাইভের বড় ফাইল ডাউনলোডের বিশেষ লিনাক্স কমান্ড
-wget --no-check-certificate "$VIDEO_URL" -O stream_video.mp4
+echo "Downloading large video directly from Google Drive Storage..."
+# গুগল ড্রাইভের বড় ফাইলের ভাইরাস স্ক্যান ওয়ার্নিং বাইপাস করার ১০০% কার্যকরী লিনাক্স ট্রিক
+wget --load-cookies /tmp/cookies.txt "https://google.com(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://google.com -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=$FILE_ID" -O stream_video.mp4 && rm -rf /tmp/cookies.txt
 
 # ফাইলটি সঠিকভাবে ডাউনলোড হয়েছে কিনা তা সার্ভারকে চেক করানো
 if [ ! -f "stream_video.mp4" ]; then
-    echo "Error: Video download from Google Drive failed! Exiting..."
+    echo "Error: Large file download from Google Drive failed! Exiting..."
     exit 1
 fi
 
