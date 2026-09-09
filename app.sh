@@ -6,11 +6,10 @@ STREAM_KEY="kavx-rgks-8ygz-gmq8-fkxs"
 # ২. আপনার ২২ মিনিটের আসল ইউটিউব ভিডিওর লিঙ্ক
 YT_VIDEO_URL="https://youtu.be"
 
-echo "Downloading video directly from YouTube to Server Base..."
-# সরাসরি মেইন ফোল্ডারে ডাউনলোড করার নিখুঁত লিনাক্স কমান্ড
-/usr/local/bin/yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" "$YT_VIDEO_URL" -o "stream_video.mp4"
+echo "Downloading video directly from YouTube to Server..."
+# লোকাল ফোল্ডারের yt-dlp ব্যবহার করে ডাউনলোড করা
+./yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" "$YT_VIDEO_URL" -o "stream_video.mp4"
 
-# ফাইলটি সঠিকভাবে ডাউনলোড হয়েছে কিনা তা সার্ভারকে চেক করানো
 if [ ! -f "stream_video.mp4" ]; then
     echo "Error: Video download failed! Exiting..."
     exit 1
