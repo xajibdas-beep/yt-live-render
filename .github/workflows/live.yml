@@ -2,8 +2,8 @@ name: 24/7 YouTube Live Stream Loop
 
 on:
   schedule:
-    - cron: '0 */5 * * *' # প্রতি ৫ ঘণ্টা পর পর অটোমেটিক নতুন সার্ভার রান করবে
-  workflow_dispatch: # ম্যানুয়ালি ক্লিক করে লাইভ চালু করার অপশন
+    - cron: '0 */5 * * *'
+  workflow_dispatch:
 
 jobs:
   stream:
@@ -12,17 +12,18 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Install System Dependencies
+      - name: Install Tools and Dependencies
         run: |
           sudo apt update
           sudo apt install ffmpeg wget python3 python3-pip -y
-          sudo wget https://github.com -O /usr/local/bin/yt-dlp
-          sudo chmod a+rx /usr/local/bin/yt-dlp
+          # পারমিশন ঝামেলা এড়াতে সরাসরি কারেন্ট ডিরেক্টরিতে yt-dlp নামানো
+          wget https://github.com
+          chmod +x yt-dlp
 
       - name: Start Unlimited Live Stream
         run: |
           chmod +x app.sh
-          timeout 5h 45m ./app.sh || true # ৫ ঘণ্টা ৪৫ মিনিট পর সার্ভারটি সেভলি ক্লোজ হয়ে নতুন সেশন ধরবে
+          timeout 5h 45m ./app.sh || true
 
       - name: Chain Trigger Next Session
         run: |
