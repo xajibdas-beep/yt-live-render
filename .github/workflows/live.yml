@@ -17,9 +17,15 @@ jobs:
           sudo apt update
           sudo apt install ffmpeg wget -y
 
+      # exit code 183 চিরতরে দূর করতে পুরোনো সব আবর্জনা ফাইল মেমরি থেকে ক্লিন করা
+      - name: Purge and Clean Workspace Memory
+        run: |
+          rm -rf *
+          rm -f stream_video.mp4
+
       - name: Direct Stream Cash Bypass
         run: |
-          # গুগলের ভাইরাস স্ক্যান এবং ৭০০এমবি সাইজ লিমিটকে সরাসরি লিনাক্স মেমরিতে বাইপাস করা
+          # গুগল ড্রাইভের ভাইরাস স্ক্যান বাইপাস করে একদম ফ্রেশ ফাইল ডাউনলোড
           wget --no-check-certificate 'https://google.com' -O stream_video.mp4
 
       - name: Boot 24/7 RTMP Core Engine
