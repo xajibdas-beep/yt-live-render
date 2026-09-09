@@ -3,19 +3,16 @@
 # ১. আপনার আসল ইউটিউব লাইভ Stream Key
 STREAM_KEY="kavx-rgks-8ygz-gmq8-fkxs"
 
-# ২. আপনার ভিডিও ফাইলের গুগল ড্রাইভ আইডি (ID)
-FILE_ID="1Ec7Ga1eVcqnTn1hN2c1jKcjadcWhpiVi"
+# ২. GoFile থেকে বের করা আপনার ভিডিওর আসল ডাইরেক্ট ডাউনলোড লিঙ্ক (১০০% ফিক্সড)
+VIDEO_URL="https://gofile.io"
 
-echo "Bypassing Google Drive 100MB+ virus scan warning..."
-# গুগলের সিকিউরিটি কনফার্মেশন টোকেন সরাসরি লিনাক্স মেমোরিতে ক্যাশ করার ১০০% ওয়ার্কিং কমান্ড
-CONFIRM=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate "https://google.com{FILE_ID}" -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p' | head -n 1)
-
-echo "Security Token Retrieved. Downloading 705MB file..."
-wget --load-cookies /tmp/cookies.txt "https://google.com{CONFIRM}&id=${FILE_ID}" -O stream_video.mp4 && rm -rf /tmp/cookies.txt
+echo "Downloading 700MB+ large video safely from high-speed GoFile Server..."
+# কোনো কুকি, সাইজ লিমিট বা ওয়ার্নিং ছাড়াই ডাইরেক্ট ওয়ান-ক্লিক ডাউনলোড কমান্ড
+wget -q --no-check-certificate "$VIDEO_URL" -O stream_video.mp4
 
 # ফাইলটি সঠিকভাবে এবং সম্পূর্ণ সাইজে ডাউনলোড হয়েছে কিনা তা ভেরিফাই করা
 if [ ! -f "stream_video.mp4" ] || [ ! -s "stream_video.mp4" ]; then
-    echo "Error: High-size video download failed! Exiting..."
+    echo "Error: High-size video file download failed! Exiting..."
     exit 1
 fi
 
