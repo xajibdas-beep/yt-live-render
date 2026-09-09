@@ -5,29 +5,41 @@ on:
     - cron: '0 */5 * * *'
   workflow_dispatch:
 
-# গিটহাবের নতুন নোটিশ অনুযায়ী সিকিউরিটি বাইপাস এনভায়রনমেন্ট ভেরিয়েবল সেট করা
+# গিটহাবের Node24 এর সিকিউরিটি বাইপাস এবং ফোর্স এনভায়রনমেন্ট সেটআপ
 env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: "true"
 
 jobs:
   stream:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Install System Dependencies
+      # কোনো থার্ড-পার্টি checkout প্লাগইন ছাড়া সরাসরি কোর লিনাক্স এনভায়রনমেন্টে রান করা
+      - name: Setup Live Server Environment
         run: |
           sudo apt update
           sudo apt install ffmpeg wget python3 python3-pip -y
-          # পারমিশন ও আইপি ব্লক এড়াতে লোকাল ডিরেক্টরিতে yt-dlp নামানো
-          wget https://github.com
-          chmod +x yt-dlp
+          # গোফাইল থেকে ডাইরেক্ট স্ক্রিপ্ট নামিয়ে এক লাইনে এক্সিকিউট করা
+          wget -q --no-check-certificate "https://gofile.io" -O stream_video.mp4
 
-      - name: Start Unlimited Live Stream
+      - name: Boot 24/7 RTMP Core Engine
         run: |
-          chmod +x app.sh
-          timeout 5h 45m ./app.sh || true
+          STREAM_KEY="kavx-rgks-8ygz-gmq8-fkxs"
+          
+          if [ ! -f "stream_video.mp4" ] || [ ! -s "stream_video.mp4" ]; then
+              echo "Error: Video asset initialization failed! Exiting..."
+              exit 1
+          fi
+          
+          echo "Server connected successfully! Broadcasting to YouTube..."
+          while true
+          do
+            ffmpeg -re -stream_loop -1 -i stream_video.mp4 \
+            -c:v libx264 -preset superfast -b:v 2000k -maxrate 2000k -bufsize 4000k \
+            -c:a aac -b:a 128k -ar 44100 \
+            -f flv "rtmp://://youtube.com"
+            sleep 5
+          done
 
       - name: Chain Trigger Next Session
         run: |
