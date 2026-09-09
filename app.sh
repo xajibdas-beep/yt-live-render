@@ -3,16 +3,16 @@
 # ১. আপনার আসল ইউটিউব লাইভ Stream Key
 STREAM_KEY="kavx-rgks-8ygz-gmq8-fkxs"
 
-# ২. GoFile থেকে বের করা আপনার ভিডিওর আসল ডাইরেক্ট ডাউনলোড লিঙ্ক (১০০% ফিক্সড)
-VIDEO_URL="https://gofile.io"
+# ২. আপনার ২২ মিনিটের আসল ইউটিউব ভিডিওর লিঙ্ক
+YT_VIDEO_URL="https://youtu.be"
 
-echo "Downloading 700MB+ large video safely from high-speed GoFile Server..."
-# কোনো কুকি, সাইজ লিমিট বা ওয়ার্নিং ছাড়াই ডাইরেক্ট ওয়ান-ক্লিক ডাউনলোড কমান্ড
-wget -q --no-check-certificate "$VIDEO_URL" -O stream_video.mp4
+echo "Downloading video safely using Official Engine..."
+# ইউটিউবের আইপি ব্লক এবং কুকি ওয়ার্নিং বাইপাস করার ১০০% কার্যকরী এপিআই কমান্ড
+/usr/local/bin/yt-dlp --no-check-certificates --geo-bypass -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" "$YT_VIDEO_URL" -o stream_video.mp4
 
-# ফাইলটি সঠিকভাবে এবং সম্পূর্ণ সাইজে ডাউনলোড হয়েছে কিনা তা ভেরিফাই করা
+# ফাইল ডাউনলোড ভেরিফিকেশন চেক
 if [ ! -f "stream_video.mp4" ] || [ ! -s "stream_video.mp4" ]; then
-    echo "Error: High-size video file download failed! Exiting..."
+    echo "Error: Video download failed! Exiting..."
     exit 1
 fi
 
