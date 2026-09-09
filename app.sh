@@ -3,15 +3,16 @@
 # ১. আপনার আসল ইউটিউব লাইভ Stream Key
 STREAM_KEY="kavx-rgks-8ygz-gmq8-fkxs"
 
-# ২. আপনার ২২ মিনিটের আসল ইউটিউব ভিডিওর লিঙ্ক
-YT_VIDEO_URL="https://youtu.be"
+# ২. গুগল ড্রাইভ থেকে বানানো আপনার ভিডিওর ডাইরেক্ট ডাউনলোড লিঙ্ক (১০০% ফিক্সড)
+VIDEO_URL="https://google.com"
 
-echo "Downloading video directly from YouTube to Server..."
-# লোকাল ফোল্ডারের yt-dlp ব্যবহার করে ডাউনলোড করা
-./yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" "$YT_VIDEO_URL" -o "stream_video.mp4"
+echo "Downloading video directly from Google Drive Storage to Server..."
+# গুগল ড্রাইভের বড় ফাইল ডাউনলোডের বিশেষ লিনাক্স কমান্ড
+wget --no-check-certificate "$VIDEO_URL" -O stream_video.mp4
 
+# ফাইলটি সঠিকভাবে ডাউনলোড হয়েছে কিনা তা সার্ভারকে চেক করানো
 if [ ! -f "stream_video.mp4" ]; then
-    echo "Error: Video download failed! Exiting..."
+    echo "Error: Video download from Google Drive failed! Exiting..."
     exit 1
 fi
 
