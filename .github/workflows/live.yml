@@ -5,6 +5,10 @@ on:
     - cron: '0 */5 * * *'
   workflow_dispatch:
 
+# গিটহাবের নতুন নোটিশ অনুযায়ী সিকিউরিটি বাইপাস এনভায়রনমেন্ট ভেরিয়েবল সেট করা
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: "true"
+
 jobs:
   stream:
     runs-on: ubuntu-latest
@@ -12,11 +16,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Install Tools and Dependencies
+      - name: Install System Dependencies
         run: |
           sudo apt update
           sudo apt install ffmpeg wget python3 python3-pip -y
-          # পারমিশন ঝামেলা এড়াতে সরাসরি কারেন্ট ডিরেক্টরিতে yt-dlp নামানো
+          # পারমিশন ও আইপি ব্লক এড়াতে লোকাল ডিরেক্টরিতে yt-dlp নামানো
           wget https://github.com
           chmod +x yt-dlp
 
